@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA.Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Data Entry Form</title>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body> 
+        <div class="container">
+            <form id="form1" autocomplete="off" name="google-sheet">
+                <h3>Data Entry Form</h3>
+                <label>Name: </label>
+                <input type="text" id="n" placeholder="Enter Name" required name="Name"/>
+                <label>Date: </label>
+                <input type="date" id="d" name="Date" required/>
+                <label>Policy: </label>
+                <div class="selectbox">
+                    <select id="p" name="Policy" required>
+                        <option value="Not Selected">Select Policy</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                    </div>
+                <label>Deposit Amount</label>
+                <input type="number" id="deposit" placeholder="Enter Deposit Amount" name="Deposit" required/>
+
+                <div class="btn-box">
+                    <button type="reset" class="reset">Reset</button> 
+                    <button type="button" class="reset" id="next1">Next</button>
+                </div> 
+                <div class="menu">
+                    <button type="button" class="menu" id="all">All</button>
+                </div> 
+            </form>
+
+            <form id="form2" name="google-sheet">
+                <h3>Details</h3>
+                <h4>Commission</h4>
+                <label>Commission: ₹ <span class="com" name="Commission" ></span></label><br>
+                <h4>tax</h4>
+                <label>Tax: ₹ <span class="tax" name="Tax"></span></label><br>
+                <h4>final amount</h4>
+                <label>Final Amount: ₹ <span class="final" name="Finalamount"></span></label><br>
+                <h2>Please check the calculated values before submiting by clicking on Calculate button !</h2>
+                <div class="btn-box"> 
+                    <button type="button" class="back" id="back1">Back</button>
+                    <button type="button" onclick="calculate()">Calculate</button>
+                    <button type="submit" class="submit">Submit</button>
+                </div>
+                <div class="menu">
+                    <a href="data.html">
+                        <button type="button" class="showAll">Show All</button>
+                    </a>
+                </div>
+            </form>
+            
+            <form id="form3">
+                <h3>Menu</h3>
+                <a href="data.html">
+                    <button type="button" class="showAll">Show All</button>
+                </a>
+                <br>
+                <br>
+                <button type="button" class="back" id="back2">Back</button>
+            </form>
+            
+            <div class="step-row">
+                <div id="progress"></div>
+                <div class="step-col"><small>Page 1</small></div>
+                <div class="step-col"><small>Page 2</small></div>
+            </div>
+        </div>
+        <script src="./script.js"></script>
+        <script>
+            var form1 = document.getElementById('form1');
+            var form2 = document.getElementById('form2');
+            var form3 = document.getElementById('form3');
+
+            var next1 = document.getElementById('next1');
+
+            var back1 = document.getElementById('back1');
+            var back2 = document.getElementById('back2');
+
+            var all = document.getElementById('all');
+
+            var progress = document.getElementById('progress');
+
+            next1.onclick = function()
+            {
+                form1.style.left = "-450px";
+                form2.style.left = "40px";
+                progress.style.width = "360px";
+            }
+            back1.onclick = function()
+            {
+                form1.style.left = "40px";
+                form2.style.left = "450px";
+                progress.style.width = "180px";
+            }
+            all.onclick = function()
+            {
+                form1.style.left = "-450px";
+                form2.style.left = "-450px";
+                form3.style.left = "40px";
+            }
+            back2.onclick = function()
+            {
+                form1.style.left = "40px";
+                form2.style.left = "450px";
+                form3.style.left = "450px";
+                progress.style.width = "180px";
+            }
+        </script>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzrtTpczCK3vay7IDVgcqRLm1DT-GqsrBzSDutDGBWCCC8iYwIEIWvucbN6_bDQMNV3/exec'
+    const form = document.forms['google-sheet']
+  
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => alert("Thanks for Contacting us..! We Will Contact You Soon..."))
+        .catch(error => console.error('Error!', error.message))
+    })
+  </script>
+    </body>
+</html>
